@@ -1,0 +1,5 @@
+@EndUserText.label: 'Service Definition App 2'
+define service ZUI_KHJM_EMP_2 {
+  expose ZC_KHJM_EMP_2     as Employee;
+  expose ZC_KHJM_VAC_REQ_2 as VacationRequest;
+}

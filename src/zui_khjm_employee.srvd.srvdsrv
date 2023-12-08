@@ -1,0 +1,6 @@
+@EndUserText.label: 'Employee'
+define service ZUI_KHJM_EMPLOYEE {
+  expose ZC_KHJM_EMP;
+  expose ZC_KHJM_VAC_ENT;
+  expose ZC_KHJM_VAC_REQ;
+}

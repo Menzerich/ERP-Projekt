@@ -1,0 +1,129 @@
+managed implementation in class zbp_khjm_emp unique;
+strict ( 2 );
+with draft;
+
+define behavior for ZR_KHJM_EMP alias Employee
+persistent table zkhjm_emp
+draft table zkhjm_emp_draft
+lock master
+total etag LastChangedAt
+authorization master ( instance )
+//etag master <field_name>
+{
+  create;
+  update;
+  delete;
+  association _VacationEntitlements { create; with draft; }
+  association _VacationRequests { create; with draft; }
+
+  draft action Activate optimized;
+  draft action Discard;
+  draft action Edit;
+  draft determine action Prepare;
+  draft action Resume;
+
+  field ( readonly, numbering : managed ) EmployeeID;
+  field ( readonly ) CreatedAt, CreatedBy, LastChangedAt, LastChangedBy;
+
+
+  mapping for zkhjm_emp corresponding
+    {
+      CreatedAt       = created_at;
+      CreatedBy       = created_by;
+      EmployeeNumber  = employee_number;
+      EmpEntranceDate = emp_entrance_date;
+      EmpFirstName    = emp_firstname;
+      EmpLastName     = emp_lastname;
+      EmployeeId      = id;
+      LastChangedAt   = last_changed_at;
+      LastChangedBy   = last_changed_by;
+    }
+}
+
+define behavior for ZR_KHJM_VAC_ENT alias VacationEntitlement
+persistent table zkhjm_vac_ent
+draft table zkhjm_vac_ent_dr
+lock dependent by _Employee
+authorization dependent by _Employee
+//etag master <field_name>
+{
+
+  update;
+  delete;
+
+  field ( readonly, numbering : managed ) VacationEntitlementId;
+  field ( readonly ) VacEntEmployee;
+  field ( readonly ) CreatedAt, CreatedBy, LastChangedAt, LastChangedBy;
+
+
+  association _Employee { with draft; }
+  mapping for zkhjm_vac_ent corresponding
+    {
+      CreatedAt             = created_at;
+      CreatedBy             = created_by;
+      LastChangedAt         = last_changed_at;
+      LastChangedBy         = last_changed_by;
+      VacEntEmployee        = employee;
+      VacationEntitlementId = id;
+      VacEntDays            = vac_ent_days;
+      VacEntYear            = vac_ent_year;
+    }
+}
+
+define behavior for ZR_KHJM_VAC_REQ alias VacationRequest
+persistent table zkhjm_vac_req
+draft table zkhjm_vac_req_dr
+lock dependent by _Employee
+authorization dependent by _Employee
+//etag master <field_name>
+{
+
+  determination DetermineResetStatusWhenEdit on modify { field VacReqComment; }
+  determination DetermineVacationRequestStatus on modify {create;}
+  validation ValidateIfEndBeforeStart on save {create; update;}
+
+ // determination DetermineVacationRequestId on modify {create;}
+  //determination DetermineVacationApplicantId on modify {create;}
+ // determination DetermineResetVacationDays on modify {field VacReqApprover, VacReqStartDate, VacReqEndDate, VacReqComment ;}
+  //determination DetermineVacReqStatus on modify {create;}
+
+   determine action ValidateVacationRequest
+   {
+    validation ValidateIfEndBeforeStart;
+   }
+    //validation ValidateNotEnoughVacDays on save {create;}
+
+  update;
+  delete;
+
+  field ( readonly, numbering : managed ) VacationRequestId;
+  field ( readonly ) VacReqApplicant, VacReqStatus;
+  field ( mandatory : create ) VacReqApprover;
+  field ( readonly : update ) VacReqApprover;
+  field ( readonly ) CreatedAt, CreatedBy, LastChangedAt, LastChangedBy;
+  field ( mandatory : create ) VacReqEndDate, VacReqStartDate;
+  field ( readonly : update ) VacReqEndDate, VacReqStartDate;
+
+
+
+  association _Employee { with draft;}
+
+  action DeclineVacationRequest result [1] $self;
+  action ApproveVacationRequest result [1] $self;
+
+  mapping for zkhjm_vac_req corresponding
+    {
+      VacationRequestId = id;
+      VacReqApplicant   = applicant;
+      VacReqApprover    = vac_req_approver;
+      VacReqComment     = vac_req_comment;
+      VacReqEndDate     = vac_req_end_date;
+      VacReqStartDate   = vac_req_start_date;
+      VacReqStatus      = vac_req_status;
+      CreatedAt         = created_at;
+      CreatedBy         = created_by;
+      LastChangedAt     = last_changed_at;
+      LastChangedBy     = last_changed_by;
+      //VacReqDays        = vac_req_days;
+    }
+}

@@ -1,0 +1,44 @@
+@Metadata.layer: #CUSTOMER
+@UI.headerInfo:{
+typeNamePlural: 'Vacation Entitlements',
+typeName: 'Vacation Entitlement',
+title.value: 'VacEntEmployee',
+description.value: 'VacationEntitlementID'
+}
+annotate entity ZC_KHJM_VAC_ENT with
+{
+  /* Facets */
+  @UI.facet:
+  [
+    { position: 10, targetQualifier: 'VacationEntitlementDetails', label: 'Vaction Entitlement Details', type: #FIELDGROUP_REFERENCE },
+    { position: 20, targetQualifier: 'AdminData', label: 'Administrative Data', type: #FIELDGROUP_REFERENCE }
+  ]
+    /*Fields*/
+  @UI.fieldGroup: [{ position: 10, qualifier: 'AdminData' }]
+  VacationEntitlementId;
+
+  @UI.fieldGroup: [{ position: 10, qualifier: 'VacationEntitlementDetails' }]
+  @UI.lineItem: [{ position: 10 }]
+  VacEntEmployee;
+
+  @UI.fieldGroup: [{ position: 20, qualifier: 'VacationEntitlementDetails' }]
+  @UI.lineItem: [{ position: 20 }]
+  VacEntYear;
+
+  @UI.lineItem: [{ position: 30, criticality: 'VacEntDaysCriticality', criticalityRepresentation: #WITHOUT_ICON}]
+  @UI.fieldGroup: [{ position: 30, qualifier: 'VacationEntitlementDetails', criticality: 'VacEntDaysCriticality', criticalityRepresentation: #WITHOUT_ICON}]
+
+  VacEntDays;
+
+  @UI.fieldGroup: [{ position: 20, qualifier: 'AdminData' }]
+  CreatedBy;
+
+  @UI.fieldGroup: [{ position: 30, qualifier: 'AdminData' }]
+  CreatedAt;
+
+  @UI.fieldGroup: [{ position: 40, qualifier: 'AdminData' }]
+  LastChangedBy;
+
+  @UI.fieldGroup: [{ position: 50, qualifier: 'AdminData' }]
+  LastChangedAt;
+}

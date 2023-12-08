@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_MSAG" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <T100A>
+    <ARBGB>ZKHJM_EMPLOYEE</ARBGB>
+    <MASTERLANG>E</MASTERLANG>
+    <STEXT>Message Class</STEXT>
+   </T100A>
+   <T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZKHJM_EMPLOYEE</ARBGB>
+     <MSGNR>201</MSGNR>
+     <TEXT>The vacation request &amp;1 was successfully approved</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZKHJM_EMPLOYEE</ARBGB>
+     <MSGNR>202</MSGNR>
+     <TEXT>The vacation request &amp;1 was successfully declined</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZKHJM_EMPLOYEE</ARBGB>
+     <MSGNR>401</MSGNR>
+     <TEXT>The vacation request &amp;1 has already been approved</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZKHJM_EMPLOYEE</ARBGB>
+     <MSGNR>402</MSGNR>
+     <TEXT>The vacation request &amp;1 has already been declined</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZKHJM_EMPLOYEE</ARBGB>
+     <MSGNR>403</MSGNR>
+     <TEXT>There are not enough vacation days available for the selected period</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZKHJM_EMPLOYEE</ARBGB>
+     <MSGNR>404</MSGNR>
+     <TEXT>The vacation end date is before the vacation start date!</TEXT>
+    </T100>
+   </T100>
+  </asx:values>
+ </asx:abap>
+</abapGit>
