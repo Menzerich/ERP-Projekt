@@ -3,7 +3,7 @@
 typeNamePlural: 'Vacation Requests',
 typeName: 'Vacation Request',
 title.value: 'VacReqComment',
-description.value: 'VacationRequestId'
+description.value: 'VacReqStartDate'
 }
 @UI.presentationVariant: [{ sortOrder:[ { by : 'VacReqStartDate' , direction: #ASC } ] }]
 annotate entity ZC_KHJM_VAC_REQ_2 with
@@ -49,9 +49,9 @@ annotate entity ZC_KHJM_VAC_REQ_2 with
   @UI.fieldGroup: [{ position: 50, qualifier: 'VacationRequestDetails' }]
   VacReqComment;
   
-//  @UI.lineItem: [{ position: 55 }]
-//  @UI.fieldGroup :[{ position :55,  qualifier: 'VacationRequestDays' } ]
-//  VacReqDays;
+  @UI.lineItem: [{ position: 45 }]
+  @UI.fieldGroup :[{ position :45,  qualifier: 'VacationRequestDetails' } ]
+  VacReqDays;
 
   @UI.lineItem: [{ position: 5, criticality: 'StatusCriticality'}]
   @UI.fieldGroup: [{ position: 60, qualifier: 'VacationRequestDetails', criticality: 'StatusCriticality'}]

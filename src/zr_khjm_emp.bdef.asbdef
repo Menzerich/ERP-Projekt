@@ -80,31 +80,24 @@ authorization dependent by _Employee
 
   determination DetermineResetStatusWhenEdit on modify { field VacReqComment; }
   determination DetermineVacationRequestStatus on modify {create;}
-  validation ValidateIfEndBeforeStart on save {create; update;}
+  determination DetermineVacationDays on modify {create;}
 
- // determination DetermineVacationRequestId on modify {create;}
-  //determination DetermineVacationApplicantId on modify {create;}
- // determination DetermineResetVacationDays on modify {field VacReqApprover, VacReqStartDate, VacReqEndDate, VacReqComment ;}
-  //determination DetermineVacReqStatus on modify {create;}
 
    determine action ValidateVacationRequest
    {
     validation ValidateIfEndBeforeStart;
    }
-    //validation ValidateNotEnoughVacDays on save {create;}
+   validation ValidateIfEndBeforeStart on save {create; update;}
+
 
   update;
   delete;
 
   field ( readonly, numbering : managed ) VacationRequestId;
-  field ( readonly ) VacReqApplicant, VacReqStatus;
-  field ( mandatory : create ) VacReqApprover;
-  field ( readonly : update ) VacReqApprover;
-  field ( readonly ) CreatedAt, CreatedBy, LastChangedAt, LastChangedBy;
-  field ( mandatory : create ) VacReqEndDate, VacReqStartDate;
-  field ( readonly : update ) VacReqEndDate, VacReqStartDate;
-
-
+  field ( mandatory : create ) VacReqApprover, VacReqEndDate, VacReqStartDate;
+  field ( readonly : update ) VacReqApprover, VacReqEndDate, VacReqStartDate;
+  field ( readonly ) CreatedAt, CreatedBy, LastChangedAt, LastChangedBy,
+  VacReqApplicant, VacReqStatus, VacReqDays;
 
   association _Employee { with draft;}
 
@@ -124,6 +117,6 @@ authorization dependent by _Employee
       CreatedBy         = created_by;
       LastChangedAt     = last_changed_at;
       LastChangedBy     = last_changed_by;
-      //VacReqDays        = vac_req_days;
+      VacReqDays        = vac_req_days;
     }
 }

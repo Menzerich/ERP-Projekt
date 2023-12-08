@@ -31,5 +31,7 @@ define behavior for ZC_KHJM_VAC_REQ alias VacationRequest
   use update;
   use delete;
 
+  use action ValidateVacationRequest;
+
   use association _Employee {with draft;}
 }

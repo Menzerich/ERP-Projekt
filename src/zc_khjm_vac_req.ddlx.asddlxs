@@ -2,8 +2,8 @@
 @UI.headerInfo:{
 typeNamePlural: 'Vacation Requests',
 typeName: 'Vacation Request',
-title.value: 'VacReqApplicant',
-description.value: 'VacationRequestID'
+title.value: 'VacReqComment',
+description.value: 'VacReqStartDate'
 
 }
 
@@ -40,8 +40,8 @@ annotate entity ZC_KHJM_VAC_REQ with
   @UI.lineItem: [{ position: 50 }]
   VacReqComment;
 
-  @UI.fieldGroup: [{ position: 55, qualifier:'VacationDays' }]
-  @UI.lineItem: [{ position: 55 }]
+  @UI.lineItem: [{ position: 35 }]
+  @UI.fieldGroup :[{ position :35,  qualifier: 'VacationRequestDetails' } ]
   VacReqDays;
 
   @UI.fieldGroup: [{ position: 60, qualifier: 'VacationRequestDetails', criticality: 'StatusCriticality'}]

@@ -1,5 +1,6 @@
 @EndUserText.label: 'Employees2'
 @AccessControl.authorizationCheck: #NOT_REQUIRED
+@Metadata.allowExtensions: true
 define root view entity ZC_KHJM_EMP_2
   provider contract transactional_query as projection on ZR_KHJM_EMP
 {

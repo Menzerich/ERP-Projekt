@@ -18,11 +18,14 @@ CLASS lhc_zr_khjm_emp DEFINITION INHERITING FROM cl_abap_behavior_handler.
     METHODS get_instance_authorizations_1 FOR INSTANCE AUTHORIZATION
       IMPORTING keys REQUEST requested_authorizations FOR VacationRequest RESULT result.
 
-    METHODS ValidateIfEndBeforeStart FOR VALIDATE ON SAVE
+    METHODS ValidateIfEndBeforeStart FOR VALIDATE ON SAVE    "Validierung Datum
       IMPORTING keys FOR VacationRequest~ValidateIfEndBeforeStart.
 
-    METHODS DetermineResetStatusWhenEdit FOR DETERMINE ON MODIFY
+    METHODS DetermineResetStatusWhenEdit FOR DETERMINE ON MODIFY "Bereits genehmigter Antrag wird, sobald man editiert wieder auf Requested gesetzt
       IMPORTING keys FOR VacationRequest~DetermineResetStatusWhenEdit.
+
+    METHODS DetermineVacationDays FOR DETERMINE ON MODIFY
+      IMPORTING keys FOR VacationRequest~DetermineVacationDays.
 
 
 ENDCLASS.
@@ -212,6 +215,41 @@ CLASS lhc_zr_khjm_emp IMPLEMENTATION.
          UPDATE FIELDS ( VacReqStatus )
          WITH VALUE #( FOR o IN vacationrequests ( %tky = o-%tky vacreqstatus = 'R' ) ).
       ENDIF.
+    ENDLOOP.
+
+  ENDMETHOD.
+
+  METHOD determinevacationdays.
+    "Read Requests
+    READ ENTITY IN LOCAL MODE zr_khjm_vac_req
+    ALL FIELDS
+    WITH CORRESPONDING #( keys )
+    RESULT DATA(VacationRequests).
+
+    LOOP AT VacationRequests INTO DATA(VacationRequest).
+
+      "Computation Vacation Days
+      TRY.
+          DATA(calendar) = cl_fhc_calendar_runtime=>create_factorycalendar_runtime( 'SAP_DE_BW' ).
+        CATCH cx_fhc_runtime.
+          RETURN.
+      ENDTRY.
+
+
+      "Calculate the working days from our RequestStartDate to RequestEndDate
+      TRY.
+          DATA(working_days) = calendar->calc_workingdays_between_dates( iv_start = vacationrequest-vacreqstartdate iv_end = vacationrequest-vacreqenddate ).
+        CATCH cx_fhc_runtime.
+          RETURN.
+      ENDTRY.
+
+      "Modify VacationRequests
+      MODIFY ENTITY IN LOCAL MODE zr_khjm_vac_req
+      UPDATE FIELDS ( VacReqDays ) "Vacation Days should be updated
+      WITH VALUE #( FOR d IN vacationrequests
+      ( %tky = d-%tky
+      VacReqDays = working_days + 1 ) ).
+
     ENDLOOP.
 
   ENDMETHOD.
