@@ -23,7 +23,7 @@ authorization master ( instance )
   draft action Resume;
 
   field ( readonly, numbering : managed ) EmployeeID;
-  field ( readonly ) CreatedAt, CreatedBy, LastChangedAt, LastChangedBy;
+  field ( readonly ) CreatedAt, CreatedBy, LastChangedAt, LastChangedBy, EmpEntranceDate, EmployeeNumber;
 
 
   mapping for zkhjm_emp corresponding
@@ -95,7 +95,7 @@ authorization dependent by _Employee
 
   field ( readonly, numbering : managed ) VacationRequestId;
   field ( mandatory : create ) VacReqApprover, VacReqEndDate, VacReqStartDate;
-  field ( readonly : update ) VacReqApprover, VacReqEndDate, VacReqStartDate;
+  //field ( readonly : update ) VacReqApprover, VacReqEndDate, VacReqStartDate;
   field ( readonly ) CreatedAt, CreatedBy, LastChangedAt, LastChangedBy,
   VacReqApplicant, VacReqStatus, VacReqDays;
 

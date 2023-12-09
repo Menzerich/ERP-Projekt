@@ -25,9 +25,16 @@ CLASS ZKHJM_PROJECT_IMPLEMENTATION IMPLEMENTATION.
     DATA requests TYPE TABLE OF ZKHJM_VAC_REQ.
     DATA request TYPE ZKHJM_VAC_REQ.
 
+    "Datenbanktabellen löschen
     DELETE FROM ZKHJM_EMP.
     DELETE FROM ZKHJM_VAC_ENT.
     DELETE FROM ZKHJM_VAC_REQ.
+
+    "Draft Tabellen löschen
+    DELETE FROM ZKHJM_EMP_DRAFT.
+    DELETE FROM ZKHJM_VAC_ENT_DR.
+    DELETE FROM ZKHJM_VAC_REQ_DR.
+
 
 "Eintrag 1 (Hans)
     data hans type String.
@@ -139,6 +146,7 @@ CLASS ZKHJM_PROJECT_IMPLEMENTATION IMPLEMENTATION.
     request-vac_req_end_date = '20220710'.
     request-vac_req_comment = 'Sommerurlaub'.
     request-vac_req_status = 'A'.
+    request-vac_req_days = '6'.
     append request TO requests.
 
     "Urlaubsantrag 2 Hans Weihnachtsurlaub
@@ -154,6 +162,7 @@ CLASS ZKHJM_PROJECT_IMPLEMENTATION IMPLEMENTATION.
     request-vac_req_end_date = '20221230'.
     request-vac_req_comment = 'Weihnachtsurlaub'.
     request-vac_req_status = 'D'.
+    request-vac_req_days = '4'.
     append request TO requests.
 
     "Urlaubsantrag 3 Hans Weihnachtsurlaub 2. Versuch
@@ -169,6 +178,7 @@ CLASS ZKHJM_PROJECT_IMPLEMENTATION IMPLEMENTATION.
     request-vac_req_end_date = '20221230'.
     request-vac_req_comment = 'Weihnachtsurlaub (2.Versuch)'.
     request-vac_req_status = 'A'.
+    request-vac_req_days = '3'.
     append request TO requests.
 
     "Urlaubsantrag 4 Hans Bereits genehmigt
@@ -184,6 +194,7 @@ CLASS ZKHJM_PROJECT_IMPLEMENTATION IMPLEMENTATION.
     request-vac_req_end_date = '20230614'.
     request-vac_req_comment = ' '.
     request-vac_req_status = 'A'.
+    request-vac_req_days = '3'.
     append request TO requests.
 
     "Urlaubsantrag 5 Hans Winterurlaub
@@ -197,8 +208,9 @@ CLASS ZKHJM_PROJECT_IMPLEMENTATION IMPLEMENTATION.
     request-last_changed_by = 'Jonas Menz'.
     request-vac_req_start_date = '20231220'.
     request-vac_req_end_date = '20231231'.
-    request-vac_req_comment = 'Weihnachtsurlaub'.
+    request-vac_req_comment = 'Winterurlaub'.
     request-vac_req_status = 'R'.
+    request-vac_req_days = '6'.
     append request TO requests.
 
     "Urlaubsantrag Petra Weihnachtsurlaub
@@ -214,6 +226,7 @@ CLASS ZKHJM_PROJECT_IMPLEMENTATION IMPLEMENTATION.
     request-vac_req_end_date = '20231231'.
     request-vac_req_comment = 'Weihnachtsurlaub'.
     request-vac_req_status = 'R'.
+    request-vac_req_days = '3'.
     append request TO requests.
 
 
