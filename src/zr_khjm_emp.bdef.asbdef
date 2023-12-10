@@ -23,7 +23,7 @@ authorization master ( instance )
   draft action Resume;
 
   field ( readonly, numbering : managed ) EmployeeID;
-  field ( readonly ) CreatedAt, CreatedBy, LastChangedAt, LastChangedBy, EmpEntranceDate, EmployeeNumber;
+  field ( readonly ) CreatedAt, CreatedBy, LastChangedAt, LastChangedBy; // EmpEntranceDate, EmployeeNumber;
 
 
   mapping for zkhjm_emp corresponding

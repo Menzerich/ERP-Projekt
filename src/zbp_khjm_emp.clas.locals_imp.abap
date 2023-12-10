@@ -12,16 +12,16 @@ CLASS lhc_zr_khjm_emp DEFINITION INHERITING FROM cl_abap_behavior_handler.
     METHODS get_instance_authorizations FOR INSTANCE AUTHORIZATION
       IMPORTING keys REQUEST requested_authorizations FOR Employee RESULT result.
 
-    METHODS DetermineVacationRequestStatus FOR DETERMINE ON MODIFY  "Status der Anfrage festlegen
+    METHODS DetermineVacationRequestStatus FOR DETERMINE ON MODIFY  "Vacation Request when create -> set on requested
       IMPORTING keys FOR VacationRequest~DetermineVacationRequestStatus.
 
     METHODS get_instance_authorizations_1 FOR INSTANCE AUTHORIZATION
       IMPORTING keys REQUEST requested_authorizations FOR VacationRequest RESULT result.
 
-    METHODS ValidateIfEndBeforeStart FOR VALIDATE ON SAVE    "Validierung Datum
+    METHODS ValidateIfEndBeforeStart FOR VALIDATE ON SAVE    "Validation dates
       IMPORTING keys FOR VacationRequest~ValidateIfEndBeforeStart.
 
-    METHODS DetermineResetStatusWhenEdit FOR DETERMINE ON MODIFY "Bereits genehmigter Antrag wird, sobald man editiert wieder auf Requested gesetzt
+    METHODS DetermineResetStatusWhenEdit FOR DETERMINE ON MODIFY "already approved Request will be set on requested again if you edit the request
       IMPORTING keys FOR VacationRequest~DetermineResetStatusWhenEdit.
 
     METHODS DetermineVacationDays FOR DETERMINE ON MODIFY
@@ -51,7 +51,7 @@ CLASS lhc_zr_khjm_emp IMPLEMENTATION.
       "Validate Status and Create Error
       IF VacationRequest->VacReqStatus = 'A'.
         message = NEW zcm_khjm_emp(
-        "Darstellung für Fehlermeldung
+        "depiction for an error message
         severity = if_abap_behv_message=>severity-error
         textid = zcm_khjm_emp=>vacation_already_approved
                                vacreqcomment = vacationrequest->VacReqComment ).
@@ -79,7 +79,7 @@ CLASS lhc_zr_khjm_emp IMPLEMENTATION.
       "Status set on Approved and receive success message
       vacationrequest->VacReqStatus = 'A'.
       message = NEW zcm_khjm_emp(
-      "Darstellung als Erfolgsmeldung
+      "depiction of a success message
       severity = if_abap_behv_message=>severity-success
       textid = zcm_khjm_emp=>vacation_successfully_approved
       vacreqcomment = vacationrequest->VacReqComment ).
@@ -189,7 +189,7 @@ CLASS lhc_zr_khjm_emp IMPLEMENTATION.
     RESULT DATA(vacationRequests).
 
     LOOP AT vacationrequests INTO DATA(vacationRequest).
-      IF vacationrequest-VacReqEndDate < vacationrequest-VacReqStartDate.
+      IF vacationrequest-VacReqEndDate < vacationrequest-VacReqStartDate.  "if enddate is before startdate -> new error message from the ZCM-Class -> the message is defined there
         message = NEW zcm_khjm_emp(
         severity = if_abap_behv_message=>severity-error
 
@@ -213,7 +213,7 @@ CLASS lhc_zr_khjm_emp IMPLEMENTATION.
       IF vacationrequest->vacReqStatus = 'A'.
         MODIFY ENTITY IN LOCAL MODE zr_khjm_vac_req
          UPDATE FIELDS ( VacReqStatus )
-         WITH VALUE #( FOR o IN vacationrequests ( %tky = o-%tky vacreqstatus = 'R' ) ).
+         WITH VALUE #( FOR o IN vacationrequests ( %tky = o-%tky vacreqstatus = 'R' ) ). "set on R again if you edit the already approved request
       ENDIF.
     ENDLOOP.
 
@@ -230,7 +230,7 @@ CLASS lhc_zr_khjm_emp IMPLEMENTATION.
 
       "Computation Vacation Days
       TRY.
-          DATA(calendar) = cl_fhc_calendar_runtime=>create_factorycalendar_runtime( 'SAP_DE_BW' ).
+          DATA(calendar) = cl_fhc_calendar_runtime=>create_factorycalendar_runtime( 'SAP_DE_BW' ). "should use the calendar of BaWÜ
         CATCH cx_fhc_runtime.
           RETURN.
       ENDTRY.

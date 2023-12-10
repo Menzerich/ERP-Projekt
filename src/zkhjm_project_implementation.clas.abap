@@ -25,18 +25,18 @@ CLASS ZKHJM_PROJECT_IMPLEMENTATION IMPLEMENTATION.
     DATA requests TYPE TABLE OF ZKHJM_VAC_REQ.
     DATA request TYPE ZKHJM_VAC_REQ.
 
-    "Datenbanktabellen löschen
+    "delete databasetable
     DELETE FROM ZKHJM_EMP.
     DELETE FROM ZKHJM_VAC_ENT.
     DELETE FROM ZKHJM_VAC_REQ.
 
-    "Draft Tabellen löschen
+    "delete draft tables
     DELETE FROM ZKHJM_EMP_DRAFT.
     DELETE FROM ZKHJM_VAC_ENT_DR.
     DELETE FROM ZKHJM_VAC_REQ_DR.
 
 
-"Eintrag 1 (Hans)
+    "input 1 (Hans)
     data hans type String.
     hans = cl_system_uuid=>create_uuid_x16_static( ).
     employee-id = hans.
@@ -45,13 +45,13 @@ CLASS ZKHJM_PROJECT_IMPLEMENTATION IMPLEMENTATION.
     employee-emp_firstname = 'Hans'.
     employee-emp_lastname = 'Maier'.
     employee-emp_entrance_date = '20000501'.
-    employee-created_by = 'Jonas Menz'.             "Name schreiben oder lieber Generator?
+    employee-created_by = 'Jonas Menz'.
     GET TIME STAMP FIELD employee-created_at.
     employee-last_changed_by = 'Jonas Menz'.
     GET TIME STAMP FIELD employee-last_changed_at.
     append employee TO employees.
 
-    "Eintrag 2 (Lisa)
+    "input 2 (Lisa)
     data lisa type String.
     lisa = cl_system_uuid=>create_uuid_x16_static(  ).
     employee-id = lisa.
@@ -66,7 +66,7 @@ CLASS ZKHJM_PROJECT_IMPLEMENTATION IMPLEMENTATION.
     GET TIME STAMP FIELD employee-last_changed_at.
     append employee TO employees.
 
-    "Eintrag 3 (Petra)
+    "input 3 (Petra)
     data petra type String.
     petra = cl_system_uuid=>create_uuid_x16_static( ).
     employee-id = petra.
@@ -81,63 +81,62 @@ CLASS ZKHJM_PROJECT_IMPLEMENTATION IMPLEMENTATION.
     GET TIME STAMP FIELD employee-last_changed_at.
     append employee TO employees.
 
-"Urlaubsansprüche
-
-"Urlaubsanspruch Hans 2022
+"Vacation Entitlement
+"Vacation Entitlement Hans 2022
     entitlement-client = sy-mandt.
     entitlement-created_by = 'Jonas Menz'.
     GET TIME STAMP FIELD entitlement-created_at.
     entitlement-last_changed_by = 'Jonas Menz'.
     GET TIME STAMP FIELD entitlement-last_changed_at.
-    entitlement-vac_ent_year = '2022'.
-    entitlement-vac_ent_days = '30'. "Sollte 30 stehen
+    entitlement-vac_ent_year = 2022.
+    entitlement-vac_ent_days = 30.
     entitlement-employee = hans.
     entitlement-id = cl_system_uuid=>create_uuid_x16_static( ).
     append entitlement TO entitlements.
 
-    "Urlaubsanspruch Hans 2023
+    "Vacation Entitlement Hans 2023
     entitlement-client = sy-mandt.
     entitlement-created_by = 'Jonas Menz'.
     GET TIME STAMP FIELD entitlement-created_at.
     entitlement-last_changed_by = 'Jonas Menz'.
     GET TIME STAMP FIELD entitlement-last_changed_at.
-    entitlement-vac_ent_year = '2023'.
-    entitlement-vac_ent_days = '30'.
+    entitlement-vac_ent_year = 2023.
+    entitlement-vac_ent_days = 30.
     entitlement-employee = hans.
     entitlement-id = cl_system_uuid=>create_uuid_x16_static( ).
     append entitlement TO entitlements.
 
-    "Urlaubsanspruch Lisa 2023
+    "Entitlement Lisa 2023
     entitlement-client = sy-mandt.
     entitlement-created_by = 'Jonas Menz'.
     GET TIME STAMP FIELD entitlement-created_at.
     entitlement-last_changed_by = 'Jonas Menz'.
     GET TIME STAMP FIELD entitlement-last_changed_at.
-    entitlement-vac_ent_year = '2023'.
-    entitlement-vac_ent_days = '30'.
+    entitlement-vac_ent_year = 2023.
+    entitlement-vac_ent_days = 30.
     entitlement-employee = lisa.
     entitlement-id = cl_system_uuid=>create_uuid_x16_static( ).
     append entitlement TO entitlements.
 
-    "Urlaubsanspruch Petra 2023
+    "Vacation Entitlement Petra 2023
     entitlement-client = sy-mandt.
     entitlement-created_by = 'Jonas Menz'.
     GET TIME STAMP FIELD entitlement-created_at.
     entitlement-last_changed_by = 'Jonas Menz'.
     GET TIME STAMP FIELD entitlement-last_changed_at.
-    entitlement-vac_ent_year = '2023'.
-    entitlement-vac_ent_days = '7'.
+    entitlement-vac_ent_year = 2023.
+    entitlement-vac_ent_days = 7.
     entitlement-employee = petra.
     entitlement-id = cl_system_uuid=>create_uuid_x16_static( ).
     append entitlement TO entitlements.
 
-"Urlaubsanträge
+    "Vacation Requests
 
-    "Urlaubsantrag 1 Hans Sommerurlaub
+    "Vacation Request 1 Hans Sommerurlaub
     request-client = sy-mandt.
     request-id = cl_system_uuid=>create_uuid_x16_static( ).
     request-applicant = hans.
-    request-vac_req_approver = lisa.            "hier zuvor Lisa Müller gestanden
+    request-vac_req_approver = lisa.
     GET TIME STAMP FIELD request-created_at.
     request-created_by = 'Jonas Menz'.
     GET TIME STAMP FIELD request-last_changed_at.
@@ -146,10 +145,10 @@ CLASS ZKHJM_PROJECT_IMPLEMENTATION IMPLEMENTATION.
     request-vac_req_end_date = '20220710'.
     request-vac_req_comment = 'Sommerurlaub'.
     request-vac_req_status = 'A'.
-    request-vac_req_days = '6'.
+    request-vac_req_days = 6.
     append request TO requests.
 
-    "Urlaubsantrag 2 Hans Weihnachtsurlaub
+    "Vacation Request 2 Hans Weihnachtsurlaub
     request-client = sy-mandt.
     request-id = cl_system_uuid=>create_uuid_x16_static( ).
     request-applicant = hans.
@@ -162,10 +161,10 @@ CLASS ZKHJM_PROJECT_IMPLEMENTATION IMPLEMENTATION.
     request-vac_req_end_date = '20221230'.
     request-vac_req_comment = 'Weihnachtsurlaub'.
     request-vac_req_status = 'D'.
-    request-vac_req_days = '4'.
+    request-vac_req_days = 4.
     append request TO requests.
 
-    "Urlaubsantrag 3 Hans Weihnachtsurlaub 2. Versuch
+    "Vacation Request 3 Hans Weihnachtsurlaub 2. Versuch
     request-client = sy-mandt.
     request-id = cl_system_uuid=>create_uuid_x16_static( ).
     request-applicant = hans.
@@ -178,10 +177,10 @@ CLASS ZKHJM_PROJECT_IMPLEMENTATION IMPLEMENTATION.
     request-vac_req_end_date = '20221230'.
     request-vac_req_comment = 'Weihnachtsurlaub (2.Versuch)'.
     request-vac_req_status = 'A'.
-    request-vac_req_days = '3'.
+    request-vac_req_days = 3.
     append request TO requests.
 
-    "Urlaubsantrag 4 Hans Bereits genehmigt
+    "Vacation Request 4 Hans Bereits genehmigt
     request-client = sy-mandt.
     request-id = cl_system_uuid=>create_uuid_x16_static( ).
     request-applicant = hans.
@@ -194,10 +193,10 @@ CLASS ZKHJM_PROJECT_IMPLEMENTATION IMPLEMENTATION.
     request-vac_req_end_date = '20230614'.
     request-vac_req_comment = ' '.
     request-vac_req_status = 'A'.
-    request-vac_req_days = '3'.
+    request-vac_req_days = 3.
     append request TO requests.
 
-    "Urlaubsantrag 5 Hans Winterurlaub
+    "Vacation Request 5 Hans Winterurlaub
     request-client = sy-mandt.
     request-id = cl_system_uuid=>create_uuid_x16_static( ).
     request-applicant = hans.
@@ -210,10 +209,10 @@ CLASS ZKHJM_PROJECT_IMPLEMENTATION IMPLEMENTATION.
     request-vac_req_end_date = '20231231'.
     request-vac_req_comment = 'Winterurlaub'.
     request-vac_req_status = 'R'.
-    request-vac_req_days = '6'.
+    request-vac_req_days = 6.
     append request TO requests.
 
-    "Urlaubsantrag Petra Weihnachtsurlaub
+    "Vacation Request Petra Weihnachtsurlaub
     request-client = sy-mandt.
     request-id = cl_system_uuid=>create_uuid_x16_static( ).
     request-applicant = petra.
@@ -226,7 +225,7 @@ CLASS ZKHJM_PROJECT_IMPLEMENTATION IMPLEMENTATION.
     request-vac_req_end_date = '20231231'.
     request-vac_req_comment = 'Weihnachtsurlaub'.
     request-vac_req_status = 'R'.
-    request-vac_req_days = '3'.
+    request-vac_req_days = 3.
     append request TO requests.
 
 
